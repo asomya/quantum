@@ -1,21 +1,24 @@
-#!/usr/bin/env python
 import os
-from distutils.core import setup
-from setuptools import find_packages
+import sys
+from setuptools import setup, find_packages
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
+    
+requirements = ['httplib2', 'argparse']
+if sys.version_info < (2,6):
+    requirements.append('simplejson')
+    
 setup(
     name = "Quantum",
-    packages = find_packages(),
-    version = "1.0",
+    version = "0.1",
     description = "Layer 2 network as a service for Openstack",
     long_description = read('README'),
     url = 'http://launchpad.net/quantum',
     license = 'BSD',
     author = 'Netstack',
     author_email = 'netstack@launchpad.net',
+    packages = find_packages(exclude=['tests']),
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Console',
@@ -25,4 +28,9 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
     ],
+    namespace_packages = ["quantum"],
+    install_requires = requirements,
+    
+    tests_require = ["nose", "mock"],
+    test_suite = "nose.collector",
 )
