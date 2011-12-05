@@ -1,2 +1,5 @@
 *.pyc
 .quantum-venv
+Quantum.egg-info
+build
+dist
